@@ -12,6 +12,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -90,5 +91,29 @@ class OrderRepositoryTest {
 
         Optional<Order> optOrder = orderRepository.findById(savedOrder.getId());
         BDDAssertions.assertThat(optOrder.get()).isNotNull();
+    }
+
+    @Test
+    public void verifyFindByOrder_Customer_Id() {
+        OrderItem savedOrderItem = orderItemRepository.save(OrderItem.builder()
+                .catalogItem(catalogItem)
+                .soldPrice(new BigDecimal("7.5"))
+                .quantity(1)
+                .build());
+
+        Set<OrderItem> items = new HashSet<>();
+        items.add(savedOrderItem);
+        Order savedOrder = orderRepository.save(Order.builder()
+                .customer(customer)
+                .items(items)
+                .status("Shipped")
+                .orderedDate(LocalDate.now())
+                .shippingCost(new BigDecimal("1.25"))
+                .paymentMethod("Credit Card")
+                .build());
+
+        //Set<OrderItem> orders = orderRepository.findOrderItemsByCustomerId(customer.getId());
+        List<Order> orders = orderRepository.findByCustomerIdOrderByOrderedDateAsc(customer.getId());
+        BDDAssertions.assertThat(orders.size()).isEqualTo(1);
     }
 }
