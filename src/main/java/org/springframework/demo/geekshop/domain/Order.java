@@ -10,12 +10,17 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Set;
 
+import org.springframework.demo.geekshop.controller.rest.OrderSerializer;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Table(name = "orders")
+@JsonSerialize(using = OrderSerializer.class)
 public class Order {
     @Id
     @GeneratedValue

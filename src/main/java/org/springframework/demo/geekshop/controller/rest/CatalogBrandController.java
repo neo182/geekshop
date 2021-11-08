@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-import static org.springframework.demo.geekshop.config.ApiConstants.API_V1;
+import static org.springframework.demo.geekshop.config.ApiConstants.*;
 
 @RestController
-@RequestMapping(API_V1 + "CatalogBrand")
+@RequestMapping(API_V1 + CATALOG_BRANDS)
 @RequiredArgsConstructor
 @Slf4j
 public class CatalogBrandController {
@@ -47,7 +47,7 @@ public class CatalogBrandController {
     }
 
     @DeleteMapping("/{id}")
-    ResponseEntity<CatalogBrand> deleteCatalogBrand(@PathVariable Long id) {
+    ResponseEntity<Void> deleteCatalogBrand(@PathVariable Long id) {
         log.info("Received a DELETE request to delete a catalogBrand with id : {}.", id);
         Optional<CatalogBrand> optCatalogBrand = catalogBrandRepository.findById(id);
         if (optCatalogBrand.isPresent()) {

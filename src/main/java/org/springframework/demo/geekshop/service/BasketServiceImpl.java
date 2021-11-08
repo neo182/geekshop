@@ -40,13 +40,12 @@ public class BasketServiceImpl implements BasketService {
         if (customerBasket == null) {
             customerBasket = new CustomerBasket();
             Optional<Customer> optCustomer = customerRepository.findById(customerId);
-            if (!optCustomer.isPresent()) {
+            if (optCustomer.isEmpty()) {
                 throw new IllegalStateException(String.format("The customer with id : %s does not exist!", customerId));
             }
             customerBasket.setCustomer(optCustomer.get());
         }
 
-        //BasketItem savedBasketItem = basketItemRepository.save(basketItem);
         customerBasket.addBasketItem(basketItem);
         customerBasketRepository.save(customerBasket);
         return basketItem;
