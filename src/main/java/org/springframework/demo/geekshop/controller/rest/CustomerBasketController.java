@@ -6,7 +6,13 @@ import static org.springframework.demo.geekshop.config.ApiConstants.CUSTOMER_BAS
 import java.util.ArrayList;
 import java.util.List;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import org.springframework.demo.geekshop.config.GenerateSwaggerDoc;
 import org.springframework.demo.geekshop.domain.BasketItem;
+import org.springframework.demo.geekshop.domain.CatalogBrand;
 import org.springframework.demo.geekshop.domain.CustomerBasket;
 import org.springframework.demo.geekshop.service.BasketService;
 import org.springframework.http.HttpStatus;
@@ -27,10 +33,18 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping(API_V1 + CUSTOMER_BASKET)
 @RequiredArgsConstructor
 @Slf4j
+@GenerateSwaggerDoc
+@Api(value = "CustomerBasketController", tags = "CustomerBasketController")
+@ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Success|OK"),
+        @ApiResponse(code = 401, message = "Unauthorized"),
+        @ApiResponse(code = 403, message = "Forbidden"),
+        @ApiResponse(code = 404, message = "Not Found")})
 public class CustomerBasketController {
     private final BasketService basketService;
 
     @GetMapping("/customerId/{customerId}")
+    @ApiOperation(value = "Gets the list of BasketItem for the given customerId", response = List.class)
     ResponseEntity<List<BasketItem>> getAllBasketItemsForCustomer(@PathVariable("customerId") Long customerId) {
         log.info("Received a GET request to get all basketItems.");
         CustomerBasket customerBasket = basketService.getBasketByCustomerId(customerId);
@@ -44,6 +58,7 @@ public class CustomerBasketController {
     }
 
     @PostMapping("/customerId/{customerId}")
+    @ApiOperation(value = "Adds a new BasketItem for the given customerId", response = BasketItem.class)
     ResponseEntity<BasketItem> addBasketItem(@PathVariable("customerId") Long customerId,
         @RequestBody BasketItem basketItem) {
         log.info("Received a POST request to add a new basketItem : {}.", basketItem);
@@ -52,6 +67,7 @@ public class CustomerBasketController {
     }
 
     @PutMapping("/increase/basketItemId/{basketItemId}")
+    @ApiOperation(value = "Increases the quantitiy of the BasketItem with the given basketItemId", response = BasketItem.class)
     ResponseEntity<BasketItem> increaseBasketItem(@PathVariable("basketItemId") Long basketItemId) {
         log.info("Received a POST request to increase basketItem with id : {}.", basketItemId);
         try {
@@ -65,6 +81,7 @@ public class CustomerBasketController {
     }
 
     @PutMapping("/decrease/basketItemId/{basketItemId}")
+    @ApiOperation(value = "Decreases the quantitiy of the BasketItem with the given basketItemId", response = BasketItem.class)
     ResponseEntity<BasketItem> decreaseBasketItem(@PathVariable("basketItemId") Long basketItemId) {
         log.info("Received a POST request to decrease basketItem with id : {}.", basketItemId);
         try {
@@ -78,7 +95,8 @@ public class CustomerBasketController {
     }
 
     @DeleteMapping("/customerId/{customerId}")
-    ResponseEntity<Void> removeCustomer(@PathVariable("customerId") Long customerId) {
+    @ApiOperation(value = "Deletes the CustomerBasket for the the given customerId", response = Void.class)
+    ResponseEntity<Void> removeCustomerBasket(@PathVariable("customerId") Long customerId) {
         log.info("Received a DELETE request to delete customerBasket for the customerId : {}.", customerId);
         basketService.removeCustomerBasket(customerId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

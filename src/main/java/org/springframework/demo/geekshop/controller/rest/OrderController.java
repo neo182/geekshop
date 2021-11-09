@@ -6,6 +6,11 @@ import static org.springframework.demo.geekshop.config.ApiConstants.ORDER;
 import java.util.List;
 import java.util.Optional;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import org.springframework.demo.geekshop.config.GenerateSwaggerDoc;
 import org.springframework.demo.geekshop.domain.Customer;
 import org.springframework.demo.geekshop.domain.Order;
 import org.springframework.demo.geekshop.repository.CustomerRepository;
@@ -24,11 +29,19 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping(API_V1 + ORDER)
 @RequiredArgsConstructor
 @Slf4j
+@GenerateSwaggerDoc
+@Api(value = "OrderController", tags = "OrderController")
+@ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Success|OK"),
+        @ApiResponse(code = 401, message = "Unauthorized"),
+        @ApiResponse(code = 403, message = "Forbidden"),
+        @ApiResponse(code = 404, message = "Not Found")})
 public class OrderController {
     private final OrderRepository orderRepository;
     private final CustomerRepository customerRepository;
 
     @GetMapping("CustomerId/{customerId}")
+    @ApiOperation(value = "Gets the list of all Orders made by a Customer with given id", response = List.class)
     ResponseEntity<List<Order>> getOrderItemsByCustomerId(@PathVariable("customerId") Long customerId) {
         log.info("Received a GET request to get order for the customer with Id : {}", customerId);
 

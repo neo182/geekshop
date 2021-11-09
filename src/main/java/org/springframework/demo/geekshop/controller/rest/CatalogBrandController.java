@@ -1,7 +1,12 @@
 package org.springframework.demo.geekshop.controller.rest;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.demo.geekshop.config.GenerateSwaggerDoc;
 import org.springframework.demo.geekshop.domain.CatalogBrand;
 import org.springframework.demo.geekshop.repository.CatalogBrandRepository;
 import org.springframework.http.HttpStatus;
@@ -17,10 +22,18 @@ import static org.springframework.demo.geekshop.config.ApiConstants.*;
 @RequestMapping(API_V1 + CATALOG_BRANDS)
 @RequiredArgsConstructor
 @Slf4j
+@GenerateSwaggerDoc
+@Api(value = "CatalogBrandController", tags = "CatalogBrandController")
+@ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Success|OK"),
+        @ApiResponse(code = 401, message = "Unauthorized"),
+        @ApiResponse(code = 403, message = "Forbidden"),
+        @ApiResponse(code = 404, message = "Not Found")})
 public class CatalogBrandController {
     private final CatalogBrandRepository catalogBrandRepository;
 
     @GetMapping
+    @ApiOperation(value = "Gets the list of all CatalogBrands", response = List.class)
     ResponseEntity<List<CatalogBrand>> getAllCatalogBrands() {
         log.info("Received a GET request to get all catalogBrands.");
         List<CatalogBrand> brands = catalogBrandRepository.findAll();
@@ -28,6 +41,7 @@ public class CatalogBrandController {
     }
 
     @PostMapping
+    @ApiOperation(value = "Adds a new CatalogBrand", response = CatalogBrand.class)
     ResponseEntity<CatalogBrand> addCatalogBrand(@RequestBody CatalogBrand catalogBrand) {
         log.info("Received a POST request to add a new catalogBrand : {}.", catalogBrand);
         CatalogBrand catalogBrandSaved = catalogBrandRepository.save(catalogBrand);
@@ -35,7 +49,8 @@ public class CatalogBrandController {
     }
 
     @PutMapping
-    ResponseEntity<CatalogBrand> modifyCatalogBrand(@RequestBody CatalogBrand catalogBrand) {
+    @ApiOperation(value = "Updates an existing CatalogBrand instance", response = CatalogBrand.class)
+    ResponseEntity<CatalogBrand> updateCatalogBrand(@RequestBody CatalogBrand catalogBrand) {
         log.info("Received a PUT request to modify a catalogBrand : {}.", catalogBrand);
         Optional<CatalogBrand> optCatalogBrand = catalogBrandRepository.findById(catalogBrand.getId());
         if (optCatalogBrand.isPresent()) {
@@ -47,6 +62,7 @@ public class CatalogBrandController {
     }
 
     @DeleteMapping("/{id}")
+    @ApiOperation(value = "Deletes a CatalogBrand with the given id", response = Void.class)
     ResponseEntity<Void> deleteCatalogBrand(@PathVariable Long id) {
         log.info("Received a DELETE request to delete a catalogBrand with id : {}.", id);
         Optional<CatalogBrand> optCatalogBrand = catalogBrandRepository.findById(id);
