@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomerBasketController {
     private final BasketService basketService;
 
-    @GetMapping("customerId/{customerId}")
+    @GetMapping("/customerId/{customerId}")
     ResponseEntity<List<BasketItem>> getAllBasketItemsForCustomer(@PathVariable("customerId") Long customerId) {
         log.info("Received a GET request to get all basketItems.");
         CustomerBasket customerBasket = basketService.getBasketByCustomerId(customerId);
@@ -43,7 +43,7 @@ public class CustomerBasketController {
         return ResponseEntity.ok(items);
     }
 
-    @PostMapping("customerId/{customerId}")
+    @PostMapping("/customerId/{customerId}")
     ResponseEntity<BasketItem> addBasketItem(@PathVariable("customerId") Long customerId,
         @RequestBody BasketItem basketItem) {
         log.info("Received a POST request to add a new basketItem : {}.", basketItem);
@@ -51,7 +51,7 @@ public class CustomerBasketController {
         return ResponseEntity.ok(savedBasketItem);
     }
 
-    @PutMapping("increase/basketItemId/{basketItemId}")
+    @PutMapping("/increase/basketItemId/{basketItemId}")
     ResponseEntity<BasketItem> increaseBasketItem(@PathVariable("basketItemId") Long basketItemId) {
         log.info("Received a POST request to increase basketItem with id : {}.", basketItemId);
         try {
@@ -64,7 +64,7 @@ public class CustomerBasketController {
         }
     }
 
-    @PutMapping("decrease/basketItemId/{basketItemId}")
+    @PutMapping("/decrease/basketItemId/{basketItemId}")
     ResponseEntity<BasketItem> decreaseBasketItem(@PathVariable("basketItemId") Long basketItemId) {
         log.info("Received a POST request to decrease basketItem with id : {}.", basketItemId);
         try {
@@ -77,7 +77,7 @@ public class CustomerBasketController {
         }
     }
 
-    @DeleteMapping("customerId/{customerId}")
+    @DeleteMapping("/customerId/{customerId}")
     ResponseEntity<Void> removeCustomer(@PathVariable("customerId") Long customerId) {
         log.info("Received a DELETE request to delete customerBasket for the customerId : {}.", customerId);
         basketService.removeCustomerBasket(customerId);

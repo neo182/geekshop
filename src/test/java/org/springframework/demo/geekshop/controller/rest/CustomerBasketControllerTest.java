@@ -107,7 +107,7 @@ class CustomerBasketControllerTest {
             .willReturn(customerBasket);
 
         MockHttpServletResponse response = mockMvc
-            .perform(MockMvcRequestBuilders.get(API_V1 + CUSTOMER_BASKET + "customerId/1")
+            .perform(MockMvcRequestBuilders.get(API_V1 + CUSTOMER_BASKET + "/customerId/1")
                 .accept(MediaType.APPLICATION_JSON))
             .andReturn().getResponse();
 
@@ -121,7 +121,7 @@ class CustomerBasketControllerTest {
             .willReturn(basketItem);
 
         MockHttpServletResponse response = mockMvc
-            .perform(MockMvcRequestBuilders.post(API_V1 + CUSTOMER_BASKET + "customerId/1")
+            .perform(MockMvcRequestBuilders.post(API_V1 + CUSTOMER_BASKET + "/customerId/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jacksonTesterBasketItem.write(basketItem).getJson())
                 .accept(MediaType.APPLICATION_JSON))
@@ -137,7 +137,7 @@ class CustomerBasketControllerTest {
             .willReturn(basketItem);
 
         MockHttpServletResponse response = mockMvc
-            .perform(MockMvcRequestBuilders.put(API_V1 + CUSTOMER_BASKET + "increase/basketItemId/1")
+            .perform(MockMvcRequestBuilders.put(API_V1 + CUSTOMER_BASKET + "/increase/basketItemId/1")
                 .accept(MediaType.APPLICATION_JSON))
             .andReturn().getResponse();
 
@@ -151,7 +151,7 @@ class CustomerBasketControllerTest {
             .willReturn(basketItem);
 
         MockHttpServletResponse response = mockMvc
-            .perform(MockMvcRequestBuilders.put(API_V1 + CUSTOMER_BASKET + "decrease/basketItemId/1")
+            .perform(MockMvcRequestBuilders.put(API_V1 + CUSTOMER_BASKET + "/decrease/basketItemId/1")
                 .accept(MediaType.APPLICATION_JSON))
             .andReturn().getResponse();
 
@@ -164,7 +164,7 @@ class CustomerBasketControllerTest {
         BDDMockito.doNothing().when(basketService).removeCustomerBasket(ArgumentMatchers.any());
 
         MockHttpServletResponse response = mockMvc
-            .perform(MockMvcRequestBuilders.delete(API_V1 + CUSTOMER_BASKET + "customerId/1")
+            .perform(MockMvcRequestBuilders.delete(API_V1 + CUSTOMER_BASKET + "/customerId/1")
                 .accept(MediaType.APPLICATION_JSON))
             .andReturn().getResponse();
 

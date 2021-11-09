@@ -118,7 +118,7 @@ class OrderControllerTest {
             .willReturn(orders);
 
         MockHttpServletResponse response = mockMvc
-            .perform(MockMvcRequestBuilders.get(API_V1 + ORDER + "CustomerId/1")
+            .perform(MockMvcRequestBuilders.get(API_V1 + ORDER + "/CustomerId/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jacksonTesterOrders.write(orders).getJson()))
             .andReturn().getResponse();
