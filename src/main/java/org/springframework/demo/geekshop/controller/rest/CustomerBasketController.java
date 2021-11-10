@@ -12,7 +12,6 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.demo.geekshop.config.GenerateSwaggerDoc;
 import org.springframework.demo.geekshop.domain.BasketItem;
-import org.springframework.demo.geekshop.domain.CatalogBrand;
 import org.springframework.demo.geekshop.domain.CustomerBasket;
 import org.springframework.demo.geekshop.service.BasketService;
 import org.springframework.http.HttpStatus;
