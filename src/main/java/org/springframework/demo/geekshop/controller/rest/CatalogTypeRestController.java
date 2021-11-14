@@ -30,7 +30,7 @@ import static org.springframework.demo.geekshop.config.ApiConstants.CATALOG_TYPE
         @ApiResponse(code = 401, message = "Unauthorized"),
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "Not Found")})
-public class CatalogTypeController {
+public class CatalogTypeRestController {
     private final CatalogTypeRepository CatalogTypeRepository;
 
     @GetMapping

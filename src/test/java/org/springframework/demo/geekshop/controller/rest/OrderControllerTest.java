@@ -38,7 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @AutoConfigureJsonTesters
-@WebMvcTest(OrderController.class)
+@WebMvcTest(OrderRestController.class)
 class OrderControllerTest {
     @Autowired
     MockMvc mockMvc;
@@ -52,12 +52,12 @@ class OrderControllerTest {
     @MockBean
     OrderRepository orderRepository;
 
-    OrderController orderController;
+    OrderRestController orderController;
     Order order;
 
     @BeforeEach
     public void setUp() {
-        orderController = new OrderController(orderRepository, customerRepository);
+        orderController = new OrderRestController(orderRepository, customerRepository);
 
         CatalogItem catalogItem = CatalogItem.builder()
             .id(1L)

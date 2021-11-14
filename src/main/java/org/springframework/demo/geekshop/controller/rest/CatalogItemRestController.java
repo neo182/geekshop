@@ -30,7 +30,7 @@ import static org.springframework.demo.geekshop.config.ApiConstants.*;
         @ApiResponse(code = 401, message = "Unauthorized"),
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "Not Found")})
-public class CatalogItemController {
+public class CatalogItemRestController {
     private final CatalogItemRepository catalogItemRepository;
 
     @GetMapping(ADMIN + CATALOG_ITEMS)

@@ -33,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @AutoConfigureJsonTesters
-@WebMvcTest(CatalogItemController.class)
+@WebMvcTest(CatalogItemRestController.class)
 class CatalogItemControllerTest {
     @Autowired
     MockMvc mockMvc;
@@ -47,13 +47,13 @@ class CatalogItemControllerTest {
     @MockBean
     CatalogItemRepository catalogItemRepository;
 
-    CatalogItemController catalogItemController;
+    CatalogItemRestController catalogItemController;
 
     CatalogItem catalogItem;
 
     @BeforeEach
     public void setUp() {
-        catalogItemController = new CatalogItemController(catalogItemRepository);
+        catalogItemController = new CatalogItemRestController(catalogItemRepository);
         jacksonTesterCatalogItemList = jacksonTesterCatalogItemList.forView(RestView.NormalUser.class);
 
 

@@ -39,7 +39,7 @@ import lombok.extern.slf4j.Slf4j;
         @ApiResponse(code = 401, message = "Unauthorized"),
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "Not Found")})
-public class CustomerBasketController {
+public class CustomerBasketRestController {
     private final BasketService basketService;
 
     @GetMapping("/customerId/{customerId}")

@@ -30,8 +30,8 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @AutoConfigureJsonTesters
-@WebMvcTest(CatalogTypeController.class)
-class CatalogTypeControllerTest {
+@WebMvcTest(CatalogTypeRestController.class)
+class CatalogTypeRestControllerTest {
     @Autowired
     MockMvc mockMvc;
 
@@ -42,13 +42,13 @@ class CatalogTypeControllerTest {
     JacksonTester<CatalogType> jacksonTesterCatalogType;
 
     @MockBean
-    CatalogTypeRepository CatalogTypeRepository;
+    CatalogTypeRepository catalogTypeRepository;
 
-    CatalogTypeController CatalogTypeController;
+    CatalogTypeRestController catalogTypeRestController;
 
     @BeforeEach
     public void setup() {
-        CatalogTypeController = new CatalogTypeController(CatalogTypeRepository);
+        catalogTypeRestController = new CatalogTypeRestController(catalogTypeRepository);
     }
 
     @Test
@@ -58,7 +58,7 @@ class CatalogTypeControllerTest {
             new CatalogType(2L, "Sticker")
         );
 
-        BDDMockito.given(CatalogTypeRepository.findAll()).willReturn(CatalogTypes);
+        BDDMockito.given(catalogTypeRepository.findAll()).willReturn(CatalogTypes);
 
         MockHttpServletResponse response = mockMvc
             .perform(MockMvcRequestBuilders.get(API_V1 + CATALOG_TYPES)
@@ -73,7 +73,7 @@ class CatalogTypeControllerTest {
     public void verifyAddCatalogType() throws Exception {
         CatalogType typeTShirt = new CatalogType(1L, "T-shirt");
 
-        BDDMockito.given(CatalogTypeRepository.save(ArgumentMatchers.any())).willReturn(typeTShirt);
+        BDDMockito.given(catalogTypeRepository.save(ArgumentMatchers.any())).willReturn(typeTShirt);
 
         MockHttpServletResponse response = mockMvc
             .perform(MockMvcRequestBuilders.post(API_V1 + CATALOG_TYPES)
@@ -90,8 +90,8 @@ class CatalogTypeControllerTest {
     public void verifyModifyCatalogType() throws Exception {
         CatalogType typeTShirt = new CatalogType(1L, "T-shirt");
 
-        BDDMockito.given(CatalogTypeRepository.findById(ArgumentMatchers.any())).willReturn(Optional.of(typeTShirt));
-        BDDMockito.given(CatalogTypeRepository.save(ArgumentMatchers.any())).willReturn(typeTShirt);
+        BDDMockito.given(catalogTypeRepository.findById(ArgumentMatchers.any())).willReturn(Optional.of(typeTShirt));
+        BDDMockito.given(catalogTypeRepository.save(ArgumentMatchers.any())).willReturn(typeTShirt);
 
         MockHttpServletResponse response = mockMvc
             .perform(MockMvcRequestBuilders.put(API_V1 + CATALOG_TYPES)
@@ -109,7 +109,7 @@ class CatalogTypeControllerTest {
         CatalogType typeTShirt = new CatalogType(1L, "T-shirt");
         String id = typeTShirt.getId().toString();
 
-        BDDMockito.given(CatalogTypeRepository.findById(ArgumentMatchers.any()))
+        BDDMockito.given(catalogTypeRepository.findById(ArgumentMatchers.any()))
             .willReturn(Optional.of(typeTShirt));
 
         MockHttpServletResponse response = mockMvc
@@ -119,7 +119,7 @@ class CatalogTypeControllerTest {
             .andReturn().getResponse();
 
         BDDAssertions.assertThat(response.getStatus()).isEqualTo(HttpStatus.NO_CONTENT.value());
-        Mockito.verify(CatalogTypeRepository).delete(typeTShirt);
+        Mockito.verify(catalogTypeRepository).delete(typeTShirt);
     }
 
 }

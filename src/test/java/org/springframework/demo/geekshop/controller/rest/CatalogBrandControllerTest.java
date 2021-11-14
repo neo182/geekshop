@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @AutoConfigureJsonTesters
-@WebMvcTest(CatalogBrandController.class)
+@WebMvcTest(CatalogBrandRestController.class)
 class CatalogBrandControllerTest {
     @Autowired
     MockMvc mockMvc;
@@ -44,11 +44,11 @@ class CatalogBrandControllerTest {
     @MockBean
     CatalogBrandRepository catalogBrandRepository;
 
-    CatalogBrandController catalogBrandController;
+    CatalogBrandRestController catalogBrandRestController;
 
     @BeforeEach
     public void setup() {
-        catalogBrandController = new CatalogBrandController(catalogBrandRepository);
+        catalogBrandRestController = new CatalogBrandRestController(catalogBrandRepository);
     }
 
     @Test

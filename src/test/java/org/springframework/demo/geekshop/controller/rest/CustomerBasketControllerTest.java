@@ -35,7 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @AutoConfigureJsonTesters
-@WebMvcTest(CustomerBasketController.class)
+@WebMvcTest(CustomerBasketRestController.class)
 class CustomerBasketControllerTest {
     @Autowired
     MockMvc mockMvc;
@@ -49,7 +49,7 @@ class CustomerBasketControllerTest {
     @Autowired
     JacksonTester<BasketItem> jacksonTesterBasketItem;
 
-    CustomerBasketController customerBasketController;
+    CustomerBasketRestController customerBasketController;
 
     private BasketItem basketItem;
     private CustomerBasket customerBasket;
@@ -57,7 +57,7 @@ class CustomerBasketControllerTest {
 
     @BeforeEach
     public void setUp() {
-        customerBasketController = new CustomerBasketController(basketService);
+        customerBasketController = new CustomerBasketRestController(basketService);
 
         CatalogItem catalogItem = CatalogItem.builder()
             .catalogBrand(new CatalogBrand(1L, "Groovy"))
