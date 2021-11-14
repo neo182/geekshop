@@ -30,7 +30,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping(API_V1 + CUSTOMER_BASKET)
-@RequiredArgsConstructor
 @Slf4j
 @GenerateSwaggerDoc
 @Api(value = "CustomerBasketController", tags = "CustomerBasketController")
@@ -40,7 +39,11 @@ import lombok.extern.slf4j.Slf4j;
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "Not Found")})
 public class CustomerBasketRestController {
-    private final BasketService basketService;
+    private BasketService basketService;
+
+    public CustomerBasketRestController(BasketService basketService) {
+        this.basketService = basketService;
+    }
 
     @GetMapping("/customerId/{customerId}")
     @ApiOperation(value = "Gets the list of BasketItem for the given customerId", response = List.class)

@@ -27,7 +27,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping(API_V1 + ORDER)
-@RequiredArgsConstructor
 @Slf4j
 @GenerateSwaggerDoc
 @Api(value = "OrderController", tags = "OrderController")
@@ -37,8 +36,13 @@ import lombok.extern.slf4j.Slf4j;
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "Not Found")})
 public class OrderRestController {
-    private final OrderRepository orderRepository;
-    private final CustomerRepository customerRepository;
+    private OrderRepository orderRepository;
+    private CustomerRepository customerRepository;
+
+    public OrderRestController(OrderRepository orderRepository, CustomerRepository customerRepository) {
+        this.orderRepository = orderRepository;
+        this.customerRepository = customerRepository;
+    }
 
     @GetMapping("CustomerId/{customerId}")
     @ApiOperation(value = "Gets the list of all Orders made by a Customer with given id", response = List.class)

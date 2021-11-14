@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @Controller
-@RequiredArgsConstructor
 @RequestMapping("/catalogbrands")
 public class CatalogBrandController {
     private CatalogBrandRepository catalogBrandRepository;
+
+    public CatalogBrandController(CatalogBrandRepository catalogBrandRepository) {
+        this.catalogBrandRepository = catalogBrandRepository;
+    }
 
     @GetMapping
     public String getAllCatalogBrands(Model model) {

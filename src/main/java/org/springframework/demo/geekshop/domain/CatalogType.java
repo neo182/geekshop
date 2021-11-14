@@ -25,4 +25,9 @@ public class CatalogType {
         this.id = null;
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+        return type;
+    }
 }

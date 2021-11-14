@@ -20,7 +20,6 @@ import static org.springframework.demo.geekshop.config.ApiConstants.*;
 
 @RestController
 @RequestMapping(API_V1 + CATALOG_BRANDS)
-@RequiredArgsConstructor
 @Slf4j
 @GenerateSwaggerDoc
 @Api(value = "CatalogBrandController", tags = "CatalogBrandController")
@@ -30,7 +29,11 @@ import static org.springframework.demo.geekshop.config.ApiConstants.*;
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "Not Found")})
 public class CatalogBrandRestController {
-    private final CatalogBrandRepository catalogBrandRepository;
+    private CatalogBrandRepository catalogBrandRepository;
+
+    public CatalogBrandRestController(CatalogBrandRepository catalogBrandRepository) {
+        this.catalogBrandRepository = catalogBrandRepository;
+    }
 
     @GetMapping
     @ApiOperation(value = "Gets the list of all CatalogBrands", response = List.class)

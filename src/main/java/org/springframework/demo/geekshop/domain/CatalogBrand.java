@@ -25,4 +25,9 @@ public class CatalogBrand {
         this.id = null;
         this.brand = brand;
     }
+
+    @Override
+    public String toString() {
+        return brand;
+    }
 }

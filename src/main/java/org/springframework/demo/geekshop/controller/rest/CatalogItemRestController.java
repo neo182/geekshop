@@ -21,7 +21,6 @@ import static org.springframework.demo.geekshop.config.ApiConstants.*;
 
 @RestController
 @RequestMapping(API_V1)
-@RequiredArgsConstructor
 @Slf4j
 @GenerateSwaggerDoc
 @Api(value = "CatalogItemController", tags = "CatalogItemController")
@@ -31,7 +30,11 @@ import static org.springframework.demo.geekshop.config.ApiConstants.*;
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "Not Found")})
 public class CatalogItemRestController {
-    private final CatalogItemRepository catalogItemRepository;
+    private CatalogItemRepository catalogItemRepository;
+
+    public CatalogItemRestController(CatalogItemRepository catalogItemRepository) {
+        this.catalogItemRepository = catalogItemRepository;
+    }
 
     @GetMapping(ADMIN + CATALOG_ITEMS)
     @JsonView(RestView.Admin.class)

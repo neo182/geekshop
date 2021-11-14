@@ -21,7 +21,6 @@ import static org.springframework.demo.geekshop.config.ApiConstants.CATALOG_TYPE
 
 @RestController
 @RequestMapping(API_V1 + CATALOG_TYPES)
-@RequiredArgsConstructor
 @Slf4j
 @GenerateSwaggerDoc
 @Api(value = "CatalogTypeController", tags = "CatalogTypeController")
@@ -31,7 +30,11 @@ import static org.springframework.demo.geekshop.config.ApiConstants.CATALOG_TYPE
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "Not Found")})
 public class CatalogTypeRestController {
-    private final CatalogTypeRepository CatalogTypeRepository;
+    private CatalogTypeRepository CatalogTypeRepository;
+
+    public CatalogTypeRestController(CatalogTypeRepository catalogTypeRepository) {
+        CatalogTypeRepository = catalogTypeRepository;
+    }
 
     @GetMapping
     @ApiOperation(value = "Gets the list of all CatalogTypes for Admin", response = List.class)
