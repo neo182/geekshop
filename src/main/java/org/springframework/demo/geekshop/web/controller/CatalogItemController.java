@@ -16,8 +16,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -50,7 +53,15 @@ public class CatalogItemController {
     }
 
     @PostMapping(value = "/save")
-    public String saveNewCatalogItem(@ModelAttribute("catalogItem") CatalogItem catalogItem) {
+    public String saveNewCatalogItem(HttpServletRequest servletRequest, @ModelAttribute("catalogItem") CatalogItem catalogItem) {
+        try {
+            MultipartFile picFile = catalogItem.getPicture();
+            File fileDest = new File(servletRequest.getServletContext().getRealPath("/images"), picFile.getOriginalFilename());
+            log.info("Image for catalog item is stored in the location : {}", fileDest.getAbsolutePath());
+            picFile.transferTo(fileDest);
+        } catch (Exception ex) {
+            log.info("Error in uploading file : {}", ex);
+        }
         log.info("CatalogItem to be save : {}", catalogItem);
         catalogItemRepository.save(catalogItem);
 

@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.demo.geekshop.controller.rest.RestView;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -53,4 +54,7 @@ public class CatalogItem {
     // Maximum number of units that can be in-stock at any time (due to physical/logistical constraints in warehouses)
     @JsonView(RestView.Admin.class)
     private Integer maxStockThreshold;
+
+    @Transient
+    private MultipartFile picture;
 }

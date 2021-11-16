@@ -9,7 +9,7 @@
   </head>
   <body>
     <h1>Add New Catalog Item</h1>
-    <form:form action="/catalogitems/save" method="post">
+    <form:form action="/catalogitems/save" method="post" enctype="multipart/form-data">
      <table>
         <tr>
            <td><form:label path = "name">Item Name</form:label></td>
@@ -49,7 +49,10 @@
            <td><form:label path = "maxStockThreshold">Display Price</form:label></td>
            <td><form:input path = "maxStockThreshold" value="10"/></td>
         </tr>
-
+        <tr>
+           <td><form:label path = "picture">Item Picture</form:label></td>
+           <td><input type="file" name="picture"/></td>
+        </tr>
         <tr>
            <td colspan = "2">
               <input type = "submit" value = "Submit"/>
