@@ -47,6 +47,10 @@
        <td>MaxStock Threshold</td>
        <td><c:out value="${catalogitem.maxStockThreshold}" /></td>
     </tr>
+   <tr>
+      <td>Catalog Item Image </td>
+      <td><img width="100" height="100" src="/catalogitems/image/<c:out value='${catalogitem.pictureUrl}'/>"></td>
+    </tr>
     </table>
 </c:if>
 

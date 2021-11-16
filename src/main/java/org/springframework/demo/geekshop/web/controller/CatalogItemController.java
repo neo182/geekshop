@@ -1,8 +1,7 @@
 package org.springframework.demo.geekshop.web.controller;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.commons.io.IOUtils;
 import org.springframework.demo.geekshop.domain.CatalogBrand;
 import org.springframework.demo.geekshop.domain.CatalogItem;
 import org.springframework.demo.geekshop.domain.CatalogType;
@@ -12,6 +11,7 @@ import org.springframework.demo.geekshop.repository.CatalogTypeRepository;
 import org.springframework.demo.geekshop.web.converter.BigDecimalEditor;
 import org.springframework.demo.geekshop.web.converter.CatalogBrandEditor;
 import org.springframework.demo.geekshop.web.converter.CatalogTypeEditor;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -20,7 +20,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -56,9 +59,10 @@ public class CatalogItemController {
     public String saveNewCatalogItem(HttpServletRequest servletRequest, @ModelAttribute("catalogItem") CatalogItem catalogItem) {
         try {
             MultipartFile picFile = catalogItem.getPicture();
-            File fileDest = new File(servletRequest.getServletContext().getRealPath("/images"), picFile.getOriginalFilename());
+            File fileDest = new File(servletRequest.getServletContext().getRealPath("/WEB-INF/uploads"), picFile.getOriginalFilename());
             log.info("Image for catalog item is stored in the location : {}", fileDest.getAbsolutePath());
             picFile.transferTo(fileDest);
+            catalogItem.setPictureUrl(picFile.getOriginalFilename());
         } catch (Exception ex) {
             log.info("Error in uploading file : {}", ex);
         }
@@ -105,5 +109,12 @@ public class CatalogItemController {
     @ModelAttribute("catalogBrandList")
     public List<CatalogBrand> getCatalogBrandList() {
         return catalogBrandRepository.findAll();
+    }
+
+    @GetMapping(value = "/image/{pictureUrl}")
+    public void getCatalogImageAsByteArray(@PathVariable String pictureUrl, HttpServletRequest servletRequest, HttpServletResponse response) throws IOException {
+        InputStream in = servletRequest.getServletContext().getResourceAsStream("/WEB-INF/uploads/" + pictureUrl);
+        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+        IOUtils.copy(in, response.getOutputStream());
     }
 }
