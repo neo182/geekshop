@@ -6,8 +6,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CatalogItem</title>
 </head>
+
 <body>
 <h1>Catalog Item - ${catalogitem.name}</h1>
 <c:set var="requestPath" value="${requestScope['javax.servlet.forward.request_uri']}" />

@@ -52,7 +52,7 @@ public class CatalogItemController {
     public String getAllCatalogBrands(Model model) {
         model.addAttribute("catalogItemList",
                 catalogItemRepository.findAll());
-        return "/catalogitem/list";
+        return "/catalogitem/listCatalogItems";
     }
 
     @PostMapping(value = "/save")
@@ -74,7 +74,7 @@ public class CatalogItemController {
 
     @GetMapping(value = "/add")
     public ModelAndView addNewCatalogItem() {
-        ModelAndView modelAndView = new ModelAndView("/catalogitem/addNew",
+        ModelAndView modelAndView = new ModelAndView("/catalogitem/addCatalogItem",
                 "command", new CatalogItem());
         return modelAndView;
     }
