@@ -2,11 +2,14 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
+<!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Admin Catalog Item</title>
-
 </head>
+
 <body>
 <h1>Add New Catalog Item</h1>
 <form:form action="/catalogitems/save" method="post" enctype="multipart/form-data">
