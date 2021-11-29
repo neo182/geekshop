@@ -59,7 +59,7 @@ public class CatalogItemController {
     public String saveNewCatalogItem(HttpServletRequest servletRequest, @ModelAttribute("catalogItem") CatalogItem catalogItem) {
         try {
             MultipartFile picFile = catalogItem.getPicture();
-            File fileDest = new File(servletRequest.getServletContext().getRealPath("/WEB-INF/uploads"), picFile.getOriginalFilename());
+            File fileDest = new File(servletRequest.getServletContext().getRealPath("/WEB-INF/item_images"), picFile.getOriginalFilename());
             log.info("Image for catalog item is stored in the location : {}", fileDest.getAbsolutePath());
             picFile.transferTo(fileDest);
             catalogItem.setPictureUrl(picFile.getOriginalFilename());
@@ -86,13 +86,18 @@ public class CatalogItemController {
         return "/catalogitem/catalogitem";
     }
 
+    @GetMapping(value = "/display")
+    public String displayCatalogItemById(Model model) {
+        model.addAttribute("catalogItemList", catalogItemRepository.findAll());
+        return "displayCatalogItems";
+    }
+
     @GetMapping(value = "/edit/{id}")
     public ModelAndView editCatalogItem(@PathVariable long id, Model model) {
         ModelAndView modelAndView = new ModelAndView("/catalogitem/catalogitem",
                 "command", catalogItemRepository.findById(id).get());
         return modelAndView;
     }
-
 
     @GetMapping(value = "/delete/{id}")
     public String deleteCatalogItemById(@PathVariable long id) {
@@ -113,7 +118,7 @@ public class CatalogItemController {
 
     @GetMapping(value = "/image/{pictureUrl}")
     public void getCatalogImageAsByteArray(@PathVariable String pictureUrl, HttpServletRequest servletRequest, HttpServletResponse response) throws IOException {
-        InputStream in = servletRequest.getServletContext().getResourceAsStream("/WEB-INF/uploads/" + pictureUrl);
+        InputStream in = servletRequest.getServletContext().getResourceAsStream("/WEB-INF/item_images/" + pictureUrl);
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
         IOUtils.copy(in, response.getOutputStream());
     }
