@@ -1,24 +1,26 @@
 <%@ page isELIgnored="false" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CatalogBrands</title>
 </head>
 <body>
-    <h1>Listing of all Catalog Brands</h1>
+<h1>Listing of all Catalog Brands</h1>
 
-    <c:forEach items="${catalogBrandList}" var="brand" >
-      <li>
-          <c:out value="${brand.brand}" />
-          <a href="/catalogbrands/show/<c:url value="${brand.id}" />">Details</a>
-          <a href="/catalogbrands/edit/<c:url value="${brand.id}" />">Edit</a>
-          <a href="/catalogbrands/delete/<c:url value="${brand.id}" />">Delete</a>
-      </li>
-    </c:forEach>
+<c:forEach items="${catalogBrandList}" var="brand">
+    <li>
+        <c:out value="${brand.brand}" />
+        <a href="/catalogbrands/show/<c:url value="${brand.id}" />">Details</a>
+        <a href="/catalogbrands/edit/<c:url value="${brand.id}" />">Edit</a>
+        <a href="/catalogbrands/delete/<c:url value="${brand.id}" />">Delete</a>
+    </li>
+</c:forEach>
 
-    <br/>
-    <a href="/catalogbrands/<c:url value="add" />">Add New</a>
+<br />
+<a href="/catalogbrands/<c:url value="add" />">Add New</a>
 </body>
 </html>
