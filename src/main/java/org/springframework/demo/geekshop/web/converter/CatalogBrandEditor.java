@@ -1,7 +1,6 @@
 package org.springframework.demo.geekshop.web.converter;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.demo.geekshop.domain.CatalogBrand;
 import org.springframework.demo.geekshop.repository.CatalogBrandRepository;
 

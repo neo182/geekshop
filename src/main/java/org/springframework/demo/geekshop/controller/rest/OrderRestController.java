@@ -6,10 +6,6 @@ import static org.springframework.demo.geekshop.config.ApiConstants.ORDER;
 import java.util.List;
 import java.util.Optional;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import org.springframework.demo.geekshop.config.GenerateSwaggerDoc;
 import org.springframework.demo.geekshop.domain.Customer;
 import org.springframework.demo.geekshop.domain.Order;
@@ -22,7 +18,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import lombok.RequiredArgsConstructor;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -31,10 +30,10 @@ import lombok.extern.slf4j.Slf4j;
 @GenerateSwaggerDoc
 @Api(value = "OrderController", tags = "OrderController")
 @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Success|OK"),
-        @ApiResponse(code = 401, message = "Unauthorized"),
-        @ApiResponse(code = 403, message = "Forbidden"),
-        @ApiResponse(code = 404, message = "Not Found")})
+    @ApiResponse(code = 200, message = "Success|OK"),
+    @ApiResponse(code = 401, message = "Unauthorized"),
+    @ApiResponse(code = 403, message = "Forbidden"),
+    @ApiResponse(code = 404, message = "Not Found") })
 public class OrderRestController {
     private OrderRepository orderRepository;
     private CustomerRepository customerRepository;

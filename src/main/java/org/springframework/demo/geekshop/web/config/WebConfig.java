@@ -32,7 +32,7 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public MultipartResolver multipartResolver() throws Exception {
+    public MultipartResolver multipartResolver() {
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
         multipartResolver.setMaxUploadSize(2097152);
         multipartResolver.setMaxInMemorySize(0);
@@ -44,6 +44,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/js/**").addResourceLocations("classpath:/static/js/");
         registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css/");
         registry.addResourceHandler("/logos/**").addResourceLocations("classpath:/static/logos/");
+        registry.addResourceHandler("/images/**").addResourceLocations("classpath:/static/images/");
     }
 
     @Override

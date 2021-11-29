@@ -27,4 +27,6 @@ public interface CatalogItemRepository extends CrudRepository<CatalogItem, Long>
 
     // A good example of PropertyExpression with the use of _ to differentiate the property
     List<CatalogItem> findByCatalogBrand_Id(Long catalogBrandId);
+
+    List<CatalogItem> findByCatalogType_Id(Long categoryTypeId);
 }

@@ -1,23 +1,32 @@
 package org.springframework.demo.geekshop.controller.rest;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import static org.springframework.demo.geekshop.config.ApiConstants.ADMIN;
+import static org.springframework.demo.geekshop.config.ApiConstants.API_V1;
+import static org.springframework.demo.geekshop.config.ApiConstants.CATALOG_ITEMS;
+
+import java.util.List;
+
 import org.springframework.demo.geekshop.config.GenerateSwaggerDoc;
 import org.springframework.demo.geekshop.domain.CatalogItem;
 import org.springframework.demo.geekshop.repository.CatalogItemRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonView;
 
-import static org.springframework.demo.geekshop.config.ApiConstants.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping(API_V1)
@@ -25,10 +34,10 @@ import static org.springframework.demo.geekshop.config.ApiConstants.*;
 @GenerateSwaggerDoc
 @Api(value = "CatalogItemController", tags = "CatalogItemController")
 @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Success|OK"),
-        @ApiResponse(code = 401, message = "Unauthorized"),
-        @ApiResponse(code = 403, message = "Forbidden"),
-        @ApiResponse(code = 404, message = "Not Found")})
+    @ApiResponse(code = 200, message = "Success|OK"),
+    @ApiResponse(code = 401, message = "Unauthorized"),
+    @ApiResponse(code = 403, message = "Forbidden"),
+    @ApiResponse(code = 404, message = "Not Found") })
 public class CatalogItemRestController {
     private CatalogItemRepository catalogItemRepository;
 
@@ -64,7 +73,7 @@ public class CatalogItemRestController {
         log.info("Received a PUT request to update a new catalogItem : {}", catalogItem);
         if (catalogItem.getId() == null) {
             return new ResponseEntity("An attempt to update catalogItem that does not exist in database has been made.",
-                    HttpStatus.BAD_REQUEST);
+                HttpStatus.BAD_REQUEST);
         }
         CatalogItem savedItem = catalogItemRepository.save(catalogItem);
         if (savedItem != null) {
@@ -98,12 +107,12 @@ public class CatalogItemRestController {
     @ApiOperation(value = "Gets a list of all CatalogItems for the given catalogTypeId and catalogBrandId", response = List.class)
     @JsonView(RestView.NormalUser.class)
     ResponseEntity<List<CatalogItem>> getCatalogItemsByTypeIdAndBrandId(
-            @PathVariable Long catalogTypeId,
-            @PathVariable Long catalogBrandId) {
+        @PathVariable Long catalogTypeId,
+        @PathVariable Long catalogBrandId) {
         log.info("Received a GET request to search for catalogItems with catalogTypeId : {} and catalogBrandId : {}",
-                catalogTypeId, catalogBrandId);
+            catalogTypeId, catalogBrandId);
         List<CatalogItem> items = catalogItemRepository.findByCatalogType_IdAndCatalogBrand_Id(
-                catalogTypeId, catalogBrandId);
+            catalogTypeId, catalogBrandId);
         if (CollectionUtils.isEmpty(items)) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }

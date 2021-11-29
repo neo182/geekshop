@@ -1,7 +1,9 @@
 package org.springframework.demo.geekshop.service;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.demo.geekshop.domain.BasketItem;
 import org.springframework.demo.geekshop.domain.Customer;
@@ -11,14 +13,13 @@ import org.springframework.demo.geekshop.repository.CustomerBasketRepository;
 import org.springframework.demo.geekshop.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.util.Optional;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class BasketServiceImpl implements BasketService {
-
 
     @Autowired
     BasketItemRepository basketItemRepository;

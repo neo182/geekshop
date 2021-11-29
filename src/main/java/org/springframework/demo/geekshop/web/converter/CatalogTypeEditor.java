@@ -9,7 +9,6 @@ import java.beans.PropertyEditorSupport;
 
 @Slf4j
 public class CatalogTypeEditor extends PropertyEditorSupport {
-    @Autowired
     CatalogTypeRepository catalogTypeRepository;
 
     public CatalogTypeEditor(CatalogTypeRepository catalogTypeRepository) {

@@ -6,10 +6,6 @@ import static org.springframework.demo.geekshop.config.ApiConstants.CUSTOMER_BAS
 import java.util.ArrayList;
 import java.util.List;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import org.springframework.demo.geekshop.config.GenerateSwaggerDoc;
 import org.springframework.demo.geekshop.domain.BasketItem;
 import org.springframework.demo.geekshop.domain.CustomerBasket;
@@ -25,7 +21,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import lombok.RequiredArgsConstructor;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -34,10 +33,10 @@ import lombok.extern.slf4j.Slf4j;
 @GenerateSwaggerDoc
 @Api(value = "CustomerBasketController", tags = "CustomerBasketController")
 @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Success|OK"),
-        @ApiResponse(code = 401, message = "Unauthorized"),
-        @ApiResponse(code = 403, message = "Forbidden"),
-        @ApiResponse(code = 404, message = "Not Found")})
+    @ApiResponse(code = 200, message = "Success|OK"),
+    @ApiResponse(code = 401, message = "Unauthorized"),
+    @ApiResponse(code = 403, message = "Forbidden"),
+    @ApiResponse(code = 404, message = "Not Found") })
 public class CustomerBasketRestController {
     private BasketService basketService;
 
